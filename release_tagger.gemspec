@@ -7,10 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = "release_tagger"
   spec.version       = ReleaseTagger::VERSION
   spec.authors       = ["Simon Coffey"]
-  spec.email         = ["simon@urbanautomaton.com"]
+  spec.email         = ["dev@lostmy.name"]
+  spec.license       = "MIT"
 
   spec.summary       = %q{Helpers for managing a simple git tag-based release workflow}
-  spec.description   = %q{Helpers for managing a simple git tag-based release workflow}
+  spec.description   = %q{A set of helpers for tagging releases and logging changes between releases}
   spec.homepage      = "https://github.com/Lostmyname/release_tagger"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -27,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.3.0"
-  spec.add_development_dependency "rubocop"
+  spec.add_development_dependency "rake",    "~> 10.0"
+  spec.add_development_dependency "rspec",   "~> 3.3", ">= 3.3.0"
+  spec.add_development_dependency "rubocop", "~> 0.32.1"
 end
