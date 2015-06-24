@@ -55,7 +55,7 @@ This will be handled by CI when this has tests.
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at
-https://github.com/[USERNAME]/release_tagger. This project is intended
+https://github.com/Lostmyname/release_tagger. This project is intended
 to be a safe, welcoming space for collaboration, and contributors are
 expected to adhere to the [Contributor
 Covenant](contributor-covenant.org) code of conduct.
