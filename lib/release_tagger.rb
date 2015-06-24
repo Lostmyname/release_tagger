@@ -54,7 +54,7 @@ module ReleaseTagger
     end
 
     def usage
-      puts "Usage: #{$0} (major|minor|patch)"
+      puts "Usage: #{File.basename($0)} (major|minor|patch)"
     end
 
     def valid_release_type?(type)
