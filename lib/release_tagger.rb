@@ -114,7 +114,7 @@ module ReleaseTagger
         exit 1
       end
 
-      version_file = Pathname.new(__FILE__).join("..", "..", "VERSION")
+      version_file = Pathname.getwd.join("VERSION")
 
       if !version_file.exist?
         err "Could not find VERSION file - this must be present to make a release"
