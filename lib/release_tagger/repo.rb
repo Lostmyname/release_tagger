@@ -23,14 +23,7 @@ module ReleaseTagger
 
       res = JSON.parse(response.body)
       release_version = '1.0.0'
-      if res == []
-        $stderr.write %(Unable to find the latest version of the package in packagecloud.
-This will create a tagged commit for #{release_version}.
-Are you sure? [y/N])
-        unless STDIN.gets.strip == "y"
-          exit 1
-        end
-      else
+      unless res == []
         latest_package = res.select { |package| package['name'] == package_name}.max_by{ |package| package['version']}
         release_version = latest_package['version']
       end

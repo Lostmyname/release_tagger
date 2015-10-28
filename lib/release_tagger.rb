@@ -172,31 +172,25 @@ Consider setting your packagecloud api token in any of:
         exit 1
       end
 
-      log "Creating release commit"
-      commit_output = %x{git add -u . && git commit -m "#{release_message}" 2>&1}
-      unless $?.success?
-        err "Error committing VERSION update:"
-        err commit_output
-        exit 1
-      end
-
       log "Adding release tag"
-      tag_output = %x{git tag #{new_version}#{release_tag} 2>&1}
+      commits = changelog
+      tag_output = %x{git tag -a #{new_version}#{release_tag} -m "#{release_message(new_version)}\n\n#{commits}" 2>&1}
       unless $?.success?
         err "Error adding version tag #{new_version}#{release_tag}:"
         err tag_output
         exit 1
       end
 
-      log "Pushing release to origin"
+      log "Pushing tags to origin"
       # Separate `push` and `push --tags` here, because only relatively recent
       # versions of git push both refs and tags with the single command.
-      push_output = %x{git push 2>&1 && git push --tags 2>&1}
+      push_output = %x{git push --tags 2>&1}
       unless $?.success?
         err "Error pushing release tag to origin:"
         err push_output
         exit 1
       end
+      log "Pushed version #{new_version}"
     end
   end
 end
