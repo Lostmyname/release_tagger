@@ -106,7 +106,7 @@ module ReleaseTagger
     end
 
     def get_repo_name
-      repo_name = %x{basename `git rev-parse --show-toplevel`}
+      repo_name = %x{basename `git rev-parse --show-toplevel`}.strip
       unless $?.success?
         raise RuntimeError, "Error getting repo name!"
       end
