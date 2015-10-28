@@ -9,7 +9,31 @@ module ReleaseTagger
     ITEMS_PER_PAGE = 1000
     VERSIONS_URL = "https://packagecloud.io/api/v1/repos/#{PACKAGECLOUD_ACCOUNT}/#{REPO}/package/rpm/el/7/%s/x86_64/versions.json?per_page=#{ITEMS_PER_PAGE}"
 
-    def get_max_package_version(package_name, pc_api_token)
+    def get_api_token
+      home_config_file = Pathname.new(File.join(File.expand_path('~'), '.release_tagger', 'packagecloud_token'))
+      etc_config_file = Pathname.new(File.join('/etc', 'release_tagger', 'packagecloud_token'))
+
+      if etc_config_file.exist?
+        package_cloud_api_token = etc_config_file.read.strip
+      elsif home_config_file.exist?
+        package_cloud_api_token = home_config_file.read.strip
+      elsif ENV['PACKAGECLOUD_API_TOKEN']
+        package_cloud_api_token = ENV['PACKAGECLOUD_API_TOKEN']
+      else
+        puts %(Config for packagecloud not found!
+Consider setting your packagecloud api token in any of:
+  - #{home_config_file}
+  - #{etc_config_file}
+  - env var PACKAGECLOUD_API_TOKEN
+)
+        exit 1
+      end
+
+      package_cloud_api_token
+    end
+
+    def get_max_package_version(package_name)
+      pc_api_token = get_api_token
       uri = URI.parse(VERSIONS_URL % package_name)
       req = Net::HTTP::Get.new(uri)
       req.basic_auth pc_api_token, ''

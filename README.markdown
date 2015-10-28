@@ -4,12 +4,12 @@ A simple command-line tool to manage a git tag-based release workflow.
 It:
 
 1. Ensures the working directory is clean and up-to-date
-2. Ensures a non-master branch is not being released
-3. Bumps the requested version number (major, minor or patch)
-4. Creates a release commit noting changes since the last release
-5. Tags the release commit
-6. Pushes the whole lot to the origin repo
+2. Bumps the requested version number (major, minor or patch)
+3. Creates an annotated tag noting changes since the last release
+4. Pushes the whole lot to the origin repo
 
+The actual version of the software will be retrieved from our package repository in the cloud
+(packagecloud)
 That's all. Any other build steps are to be managed manually, or by CI
 watching for release tags in the origin repo.
 
@@ -28,6 +28,13 @@ And then execute:
 Or install it yourself as:
 
     $ gem install release_tagger
+
+## Configuration
+The only required configuration is the packagecloud API key to retrieve the latest version.
+You can configure it adding the API key (ask the infra/geoff squad for it) at:
+- /etc/release_tagger/packagecloud_token
+- ~/.release_tagger/packagecloud_token
+- as an environment variable, PACKAGECLOUD_API_TOKEN
 
 ## Usage
 

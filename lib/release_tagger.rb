@@ -113,29 +113,6 @@ module ReleaseTagger
       repo_name
     end
 
-    def get_api_token
-      home_config_file = Pathname.new(File.join(File.expand_path('~'), '.release_tagger', 'config'))
-      etc_config_file = Pathname.new(File.join('/etc', 'release_tagger', 'config'))
-
-      if etc_config_file.exist?
-        package_cloud_api_token = etc_config_file.read.strip
-      elsif home_config_file.exist?
-        package_cloud_api_token = home_config_file.read.strip
-      elsif ENV['PACKAGECLOUD_API_TOKEN']
-        package_cloud_api_token = ENV['PACKAGECLOUD_API_TOKEN']
-      else
-        err %(Config for packagecloud not found!
-Consider setting your packagecloud api token in any of:
-  - #{home_config_file}
-  - #{etc_config_file}
-  - env var PACKAGECLOUD_API_TOKEN
-)
-        exit 1
-      end
-
-      package_cloud_api_token
-    end
-
     def run!
       if ARGV.length != 1
         usage
@@ -161,7 +138,7 @@ Consider setting your packagecloud api token in any of:
       end
 
       package_name       = 'lmn-' + get_repo_name
-      old_version_string = Repo.new().get_max_package_version(package_name, get_api_token)
+      old_version_string = Repo.new().get_max_package_version(package_name)
       old_version_parts  = old_version_string.split(".").map(&:to_i)
       old_version        = Version.new(*old_version_parts)
       new_version        = old_version.bump(release_type)
