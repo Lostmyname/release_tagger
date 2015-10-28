@@ -173,7 +173,7 @@ Consider setting your packagecloud api token in any of:
       end
 
       log "Creating release commit"
-      commit_output = %x{git add -u . && git commit -m "#{release_message(new_version)}" 2>&1}
+      commit_output = %x{git add -u . && git commit -m "#{release_message}" 2>&1}
       unless $?.success?
         err "Error committing VERSION update:"
         err commit_output

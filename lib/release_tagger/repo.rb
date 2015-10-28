@@ -24,7 +24,9 @@ module ReleaseTagger
       res = JSON.parse(response.body)
       release_version = '1.0.0'
       if res == []
-        $stderr.write 'Unable to find the latest version of the package in packagecloud. This will create a tagged commit for #{initial_release_version}. Are you sure? [y/N]'
+        $stderr.write %(Unable to find the latest version of the package in packagecloud.
+This will create a tagged commit for #{initial_release_version}.
+Are you sure? [y/N])
         unless STDIN.gets.strip == "y"
           exit 1
         end
