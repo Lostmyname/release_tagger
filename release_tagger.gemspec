@@ -6,11 +6,11 @@ require 'release_tagger/version'
 Gem::Specification.new do |spec|
   spec.name          = "release_tagger"
   spec.version       = ReleaseTagger::VERSION
-  spec.authors       = ["Simon Coffey"]
+  spec.authors       = ["Simon Coffey", "Nadir Lloret"]
   spec.email         = ["dev@lostmy.name"]
   spec.license       = "MIT"
 
-  spec.summary       = %q{Helpers for managing a simple git tag-based release workflow}
+  spec.summary       = %q{Helpers for managing a git tag-based release workflow integrated with packagecloud}
   spec.description   = %q{A set of helpers for tagging releases and logging changes between releases}
   spec.homepage      = "https://github.com/Lostmyname/release_tagger"
 
