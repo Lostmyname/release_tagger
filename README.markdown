@@ -6,7 +6,7 @@ It:
 1. Ensures the working directory is clean and up-to-date
 2. Bumps the requested version number (major, minor or patch)
 3. Creates an annotated tag noting changes since the last release
-4. Pushes the whole lot to the origin repo
+4. Pushes the tag to the origin repo
 
 The actual version of the software will be retrieved from our package repository in the cloud
 (packagecloud)
