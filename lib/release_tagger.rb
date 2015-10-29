@@ -149,8 +149,17 @@ module ReleaseTagger
         exit 1
       end
 
-      log "Adding release tag"
       commits = changelog
+
+      log "Creating release commit"
+      commit_output = %x{git commit --allow-empty -m "#{release_message(new_version)}\n\n#{commits}" 2>&1}
+      unless $?.success?
+        err "Error committing release"
+        err commit_output
+        exit 1
+      end
+
+      log "Adding release tag"
       tag_output = %x{git tag -a #{new_version}#{release_tag} -m "#{release_message(new_version)}\n\n#{commits}" 2>&1}
       unless $?.success?
         err "Error adding version tag #{new_version}#{release_tag}:"
@@ -158,10 +167,10 @@ module ReleaseTagger
         exit 1
       end
 
-      log "Pushing tags to origin"
+      log "Pushing release to origin"
       # Separate `push` and `push --tags` here, because only relatively recent
       # versions of git push both refs and tags with the single command.
-      push_output = %x{git push --tags 2>&1}
+      push_output = %x{git push && git push --tags 2>&1}
       unless $?.success?
         err "Error pushing release tag to origin:"
         err push_output
