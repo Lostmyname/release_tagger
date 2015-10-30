@@ -40,6 +40,9 @@ You can configure it adding the API key (ask the infra/geoff squad for it) at:
 
     $ do_release (major|minor|patch)
 
+When doing a release from a *non-master* branch, the tag will contain a token to mark that release as a *qa* one. 
+Only releases done from the master branch will contain the tag for *production*
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies.
