@@ -55,7 +55,7 @@ Consider setting your packagecloud api token in any of:
       ARCHS.each do |arch|
         res = get_json_response(VERSIONS_URL % [package_name, arch])
         unless res == []
-          latest_package = res.select { |package| package['name'] == package_name}.max_by{ |package| package['version']}
+          latest_package = res.select { |package| package['name'] == package_name}.max_by{ |package| Gem::Version.new(package['version'])}
           if Gem::Version.new(latest_package['version']) > Gem::Version.new(release_version)
             release_version = latest_package['version']
           end

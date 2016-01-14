@@ -1,4 +1,4 @@
-require "release_tagger/version"
+require_relative "release_tagger/version"
 require_relative "release_tagger/repo"
 require 'pathname'
 
