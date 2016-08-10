@@ -113,6 +113,10 @@ module ReleaseTagger
       repo_name
     end
 
+    def commit_msg(version_str, commit_log)
+      "#{release_message(version_str)}\n\n#{commit_log}".gsub('"', '')
+    end
+
     def run!
       if ARGV.length != 1
         usage
@@ -152,7 +156,7 @@ module ReleaseTagger
       commits = changelog
 
       log "Creating release commit"
-      commit_output = %x{git commit --allow-empty -m "#{release_message(new_version)}\n\n#{commits}" 2>&1}
+      commit_output = %x{git commit --allow-empty -m "#{commit_msg(new_version, commits)}" 2>&1}
       unless $?.success?
         err "Error committing release"
         err commit_output
@@ -160,7 +164,7 @@ module ReleaseTagger
       end
 
       log "Adding release tag"
-      tag_output = %x{git tag -a #{new_version}#{release_tag} -m "#{release_message(new_version)}\n\n#{commits}" 2>&1}
+      tag_output = %x{git tag -a #{new_version}#{release_tag} -m "#{commit_msg(new_version, commits)}" 2>&1}
       unless $?.success?
         err "Error adding version tag #{new_version}#{release_tag}:"
         err tag_output
