@@ -39,9 +39,10 @@ Consider setting your packagecloud api token in any of:
       req = Net::HTTP::Get.new(uri)
       req.basic_auth pc_api_token, ''
       response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') {|http| http.request(req)}
-      unless response.is_a?(Net::HTTPOK)
+      unless response.is_a?(Net::HTTPOK) || response.is_a?(Net::HTTPNotFound)
         puts "Error trying to get latest version of package"
         puts "URL: #{url}"
+        puts "Body: #{response.body}"
         puts response.code
         exit 1
       end
